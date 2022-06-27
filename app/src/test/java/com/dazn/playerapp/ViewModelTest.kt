@@ -4,6 +4,7 @@ import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.dazn.playerapp.api.PlayerService
 import com.dazn.playerapp.events.presentation.EventsViewModel
 import com.dazn.playerapp.model.Event
+import com.dazn.playerapp.schedule.presentation.ScheduleViewModel
 import io.reactivex.Scheduler
 import io.reactivex.Single
 import io.reactivex.android.plugins.RxAndroidPlugins
@@ -18,15 +19,13 @@ import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
-import org.mockito.MockitoAnnotations
 import org.mockito.junit.MockitoJUnitRunner
 import java.util.*
 import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
-import kotlin.collections.ArrayList
 
 @RunWith(MockitoJUnitRunner::class)
-class EventsViewModelTest {
+class ViewModelTest {
 
     @get:Rule
     var rule = InstantTaskExecutorRule()
@@ -36,6 +35,9 @@ class EventsViewModelTest {
 
     @InjectMocks
     var eventsViewModel = EventsViewModel()
+
+    @InjectMocks
+    var scheduleViewModel = ScheduleViewModel()
 
     private var testSingle: Single<List<Event>>? = null
 
@@ -62,9 +64,9 @@ class EventsViewModelTest {
 
         Mockito.`when`(playerService.getSchedule()).thenReturn(testSingle)
 
-        eventsViewModel.refresh()
+        scheduleViewModel.refresh()
 
-        Assert.assertEquals(1, arrayListOf(eventsViewModel.state.value).size)
+        Assert.assertEquals(1, arrayListOf(scheduleViewModel.state.value).size)
     }
 
     @Before
