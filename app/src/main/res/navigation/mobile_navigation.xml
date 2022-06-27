@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/mobile_navigation"
+    app:startDestination="@+id/navigation_events">
+
+    <fragment
+        android:id="@+id/navigation_events"
+        android:name="com.dazn.playerapp.events.ui.EventsFragment"
+        android:label="@string/title_events"
+        tools:layout="@layout/fragment_events">
+
+        <action
+            android:id="@+id/action_global_navigation_player"
+            app:destination="@id/navigation_player" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/navigation_schedule"
+        android:name="com.dazn.playerapp.schedule.ui.ScheduleFragment"
+        android:label="@string/title_schedule"
+        tools:layout="@layout/fragment_schedule" />
+
+    <fragment
+        android:id="@+id/navigation_player"
+        android:name="com.dazn.playerapp.player.ui.PlayerFragment"
+        android:label="@string/title_player"
+        tools:layout="@layout/player_fragment" />
+
+</navigation>
