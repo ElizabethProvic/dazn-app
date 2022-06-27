@@ -14,15 +14,18 @@ import org.junit.Assert
 import org.junit.Before
 import org.junit.Rule
 import org.junit.Test
+import org.junit.runner.RunWith
 import org.mockito.InjectMocks
 import org.mockito.Mock
 import org.mockito.Mockito
 import org.mockito.MockitoAnnotations
+import org.mockito.junit.MockitoJUnitRunner
 import java.util.*
 import java.util.concurrent.Executor
 import java.util.concurrent.TimeUnit
 import kotlin.collections.ArrayList
 
+@RunWith(MockitoJUnitRunner::class)
 class EventsViewModelTest {
 
     @get:Rule
@@ -34,25 +37,34 @@ class EventsViewModelTest {
     @InjectMocks
     var eventsViewModel = EventsViewModel()
 
-    private var testSingle: Single<ArrayList<Event>>? = null
-
-    @Before
-    fun setup() {
-        MockitoAnnotations.initMocks(this)
-    }
+    private var testSingle: Single<List<Event>>? = null
 
     @Test
     fun getEventsSuccess() {
-        val event = Event(Date("2022-06-26T01:28:10.016Z"), "1", "", "subtitle", "title", "")
+        val event = Event(Date(), "1", "", "subtitle", "title", "")
         val eventList = arrayListOf(event)
 
         testSingle = Single.just(eventList)
 
         Mockito.`when`(playerService.getEvents()).thenReturn(testSingle)
 
-        //eventsViewModel.refresh()
+        eventsViewModel.refresh()
 
-        //Assert.assertEquals(1, arrayListOf(eventsViewModel.state.value).size)
+        Assert.assertEquals(1, arrayListOf(eventsViewModel.state.value).size)
+    }
+
+    @Test
+    fun getScheduleSuccess() {
+        val event = Event(Date(), "1", "", "subtitle", "title", "")
+        val eventList = arrayListOf(event)
+
+        testSingle = Single.just(eventList)
+
+        Mockito.`when`(playerService.getSchedule()).thenReturn(testSingle)
+
+        eventsViewModel.refresh()
+
+        Assert.assertEquals(1, arrayListOf(eventsViewModel.state.value).size)
     }
 
     @Before
