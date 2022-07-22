@@ -13,7 +13,8 @@
 
         <action
             android:id="@+id/action_global_navigation_player"
-            app:destination="@id/navigation_player" />
+            app:destination="@id/navigation_player"
+            app:popUpTo="@id/navigation_events"/>
     </fragment>
 
     <fragment
