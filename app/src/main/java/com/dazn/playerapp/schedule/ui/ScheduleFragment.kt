@@ -60,6 +60,7 @@ class ScheduleFragment : Fragment(), ScheduleContract.View {
 
     override fun onDestroyView() {
         _binding = null
+        presenter.clearData()
         super.onDestroyView()
     }
 

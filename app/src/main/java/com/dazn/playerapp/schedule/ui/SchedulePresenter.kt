@@ -12,7 +12,7 @@ import io.reactivex.schedulers.Schedulers
 import java.util.*
 import javax.inject.Inject
 
-class SchedulePresenter(private var view: ScheduleContract.View) : ScheduleContract.Presenter {
+class SchedulePresenter(private var view: ScheduleContract.View?) : ScheduleContract.Presenter {
 
     @Inject
     lateinit var playerService: PlayerService
@@ -31,13 +31,18 @@ class SchedulePresenter(private var view: ScheduleContract.View) : ScheduleContr
             .subscribeBy(
                 onSuccess = { data ->
                     val eventsData = data.sortedBy { it.date }
-                    view.hideLoadingView()
-                    view.setItems(eventsData)
+                    view?.hideLoadingView()
+                    view?.setItems(eventsData)
                 },
                 onError = { error ->
-                    view.hideLoadingView()
-                    view.showErrorMessage()
+                    view?.hideLoadingView()
+                    view?.showErrorMessage()
                 }
             ).addTo(disposable)
+    }
+
+    override fun clearData() {
+        this.view = null
+        disposable.clear()
     }
 }

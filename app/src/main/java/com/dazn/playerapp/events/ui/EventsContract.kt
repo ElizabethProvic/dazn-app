@@ -12,5 +12,6 @@ interface EventsContract {
 
     interface Presenter  {
         fun getData()
+        fun clearData()
     }
 }

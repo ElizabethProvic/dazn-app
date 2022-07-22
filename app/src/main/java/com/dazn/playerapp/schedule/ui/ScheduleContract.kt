@@ -12,5 +12,6 @@ interface ScheduleContract {
 
     interface Presenter  {
         fun getData()
+        fun clearData()
     }
 }

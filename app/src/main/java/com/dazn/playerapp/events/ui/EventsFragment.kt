@@ -45,6 +45,7 @@ class EventsFragment : Fragment(), EventListAdapter.OnItemClickListener, EventsC
 
     override fun onDestroyView() {
         _binding = null
+        presenter.clearData()
         super.onDestroyView()
     }
 
