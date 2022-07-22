@@ -22,7 +22,6 @@ fun Date?.eventTimeFormatToString(): String {
     return format.format(this)
 }
 
-@RequiresApi(Build.VERSION_CODES.O)
 fun isDateTomorrow(epochMilli: Long): Boolean {
     val tomorrow = LocalDate.now().plusDays(1)
     val chosenDay = LocalDate.ofEpochDay(epochMilli / TimeUnit.DAYS.toMillis(1))

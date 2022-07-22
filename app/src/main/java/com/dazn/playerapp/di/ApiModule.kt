@@ -2,11 +2,17 @@ package com.dazn.playerapp.di
 
 import com.dazn.playerapp.api.PlayerApi
 import com.dazn.playerapp.api.PlayerService
+import com.jakewharton.espresso.OkHttp3IdlingResource
+
 import dagger.Module
 import dagger.Provides
+import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
+
+val client = OkHttpClient()
+val idlingResource = OkHttp3IdlingResource.create("okhttp", client)
 
 @Module
 class ApiModule {

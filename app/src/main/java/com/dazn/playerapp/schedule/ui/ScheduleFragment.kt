@@ -7,18 +7,15 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dazn.playerapp.databinding.FragmentScheduleBinding
 import com.dazn.playerapp.events.ui.EventListAdapter
-import com.dazn.playerapp.extenstions.observe
 import com.dazn.playerapp.model.Event
-import com.dazn.playerapp.schedule.presentation.ScheduleViewModel
 
-class ScheduleFragment : Fragment() {
+class ScheduleFragment : Fragment(), ScheduleContract.View {
 
-    lateinit var viewModel: ScheduleViewModel
+    private lateinit var presenter: SchedulePresenter
 
     private var _binding: FragmentScheduleBinding? = null
 
@@ -30,9 +27,7 @@ class ScheduleFragment : Fragment() {
 
     private val updateDataRunnable: Runnable = object : Runnable {
         override fun run() {
-
-            viewModel.refresh()
-
+            presenter.getData()
             timerHandler.postDelayed(this, EVERY_30_SECONDS)
         }
     }
@@ -42,19 +37,13 @@ class ScheduleFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        viewModel = ViewModelProvider(this).get(ScheduleViewModel::class.java)
+        presenter = SchedulePresenter(this)
 
         _binding = FragmentScheduleBinding.inflate(inflater, container, false)
         val root: View = binding.root
-
-        viewModel.start()
+        presenter.getData()
 
         setupSchedule()
-
-        with(viewModel) {
-            this.state.observe(viewLifecycleOwner, true, ::onNext, ::onError, ::onLoading)
-        }
 
         return root
     }
@@ -64,26 +53,26 @@ class ScheduleFragment : Fragment() {
         timerHandler.postDelayed(updateDataRunnable, EVERY_30_SECONDS)
     }
 
-    private fun onLoading(isLoading: Boolean) {
-        binding.loader.isVisible = isLoading
-    }
-
-    private fun onNext(data: List<Event>) {
-        binding.scheduleList.adapter = EventListAdapter(ArrayList(data), null)
-    }
-
-    private fun onError(throwable: Throwable) {
-        binding.errorMessage.isVisible = true
-    }
-
     private fun setupSchedule() {
         binding.scheduleList.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
         binding.scheduleList.adapter = adapter
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
         _binding = null
+        super.onDestroyView()
+    }
+
+    override fun setItems(items: List<Event>) {
+        binding.scheduleList.adapter = EventListAdapter(ArrayList(items), null)
+    }
+
+    override fun hideLoadingView() {
+        binding.loader.isVisible = false
+    }
+
+    override fun showErrorMessage() {
+        binding.errorMessage.isVisible = true
     }
 
     companion object {

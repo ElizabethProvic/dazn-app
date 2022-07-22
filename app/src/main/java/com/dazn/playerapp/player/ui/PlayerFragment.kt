@@ -71,8 +71,9 @@ class PlayerFragment : Fragment(), Player.Listener {
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
+        player.release()
         _binding = null
+        super.onDestroyView()
     }
 
     companion object {
