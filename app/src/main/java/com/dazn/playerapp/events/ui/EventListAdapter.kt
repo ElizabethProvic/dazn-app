@@ -57,7 +57,7 @@ class EventListAdapter(var events: ArrayList<Event>, private var listener: OnIte
             imageView.loadImage(event.imageUrl, progressDrawable)
 
             itemView.setOnClickListener {
-                listener?.onContentItemClick(event.videoUrl)
+                event.videoUrl?.let { url -> listener?.onContentItemClick(url) }
             }
         }
     }

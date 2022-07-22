@@ -8,5 +8,5 @@ data class Event(
     val imageUrl: String,
     val subtitle: String,
     val title: String,
-    val videoUrl: String
+    val videoUrl: String?
 )
