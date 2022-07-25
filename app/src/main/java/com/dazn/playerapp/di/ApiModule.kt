@@ -2,6 +2,8 @@ package com.dazn.playerapp.di
 
 import com.dazn.playerapp.api.PlayerApi
 import com.dazn.playerapp.api.PlayerService
+import com.dazn.playerapp.events.domain.DomainMapper
+import com.dazn.playerapp.events.domain.GetDataUseCase
 import com.jakewharton.espresso.OkHttp3IdlingResource
 
 import dagger.Module
@@ -32,5 +34,10 @@ class ApiModule {
     @Provides
     fun providePlayerService(): PlayerService {
         return PlayerService()
+    }
+
+    @Provides
+    fun provideEventsUseCase(playerService: PlayerService, domainMapper: DomainMapper): GetDataUseCase {
+        return  GetDataUseCase(playerService, domainMapper)
     }
 }

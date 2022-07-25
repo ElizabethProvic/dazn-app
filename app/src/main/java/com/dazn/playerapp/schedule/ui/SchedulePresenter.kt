@@ -2,14 +2,11 @@ package com.dazn.playerapp.schedule.ui
 
 import com.dazn.playerapp.api.PlayerService
 import com.dazn.playerapp.di.DaggerApiComponent
-import com.dazn.playerapp.events.domain.EventsDataUseCase
+import com.dazn.playerapp.events.domain.GetDataUseCase
 import io.reactivex.android.schedulers.AndroidSchedulers
 import io.reactivex.disposables.CompositeDisposable
-import io.reactivex.observers.DisposableSingleObserver
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
-import io.reactivex.schedulers.Schedulers
-import java.util.*
 import javax.inject.Inject
 
 class SchedulePresenter(private var view: ScheduleContract.View?) : ScheduleContract.Presenter {
@@ -17,7 +14,8 @@ class SchedulePresenter(private var view: ScheduleContract.View?) : ScheduleCont
     @Inject
     lateinit var playerService: PlayerService
 
-    private val scheduleUseCase = EventsDataUseCase()
+    @Inject
+    lateinit var getDataUseCase: GetDataUseCase
 
     init {
         DaggerApiComponent.create().inject(this)
@@ -26,7 +24,7 @@ class SchedulePresenter(private var view: ScheduleContract.View?) : ScheduleCont
     private val disposable = CompositeDisposable()
 
     override fun getData() {
-        scheduleUseCase.getScheduleData()
+        getDataUseCase.getScheduleData()
             .observeOn(AndroidSchedulers.mainThread())
             .subscribeBy(
                 onSuccess = { data ->

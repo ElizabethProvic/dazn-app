@@ -7,16 +7,10 @@ import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
 
-class EventsDataUseCase {
-
-    @Inject
-    lateinit var playerService: PlayerService
-
-    init {
-        DaggerApiComponent.create().inject(this)
-    }
-
-    private val mapper = DomainMapper()
+class GetDataUseCase @Inject constructor(
+    private val playerService: PlayerService,
+    private val mapper: DomainMapper
+) {
 
     fun getEventsData(): Single<List<Event>> {
         return playerService.getEvents()
