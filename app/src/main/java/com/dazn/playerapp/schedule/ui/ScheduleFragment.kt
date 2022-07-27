@@ -24,6 +24,9 @@ class ScheduleFragment : Fragment(), ScheduleContract.View {
     private val binding get() = _binding!!
 
     private val timerHandler = Handler()
+    /**
+     * Let's get rid of Handler and implement this inside presenter using nothing but RxJava ;)
+     * */
 
     private val updateDataRunnable: Runnable = object : Runnable {
         override fun run() {

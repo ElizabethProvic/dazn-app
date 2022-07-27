@@ -40,3 +40,42 @@ class RxImmediateSchedulerRule : TestRule {
         }
     }
 }
+/**
+ * Inside prod app we don' use rule to override rx schedulers
+ * Instead we prefer to inject schedulers and use different implementation during test and in regular app
+ * It will be Schedulers.trampoline() inside unit test
+ *
+ * Refactored presenter (also with constructor injection and view passed as a function argument
+ *
+ * class SchedulePresenter @Inject constructor(
+ *     private val mainThreadScheduler: Scheduler,
+ *     private val getDataUseCase: GetDataUseCase
+ * ) : ScheduleContract.Presenter {
+ *
+ *     private val disposable = CompositeDisposable()
+ *     private var _view: ScheduleContract.View? = null
+ *     private val view get() = _view!!
+ *
+ *     override fun getData(view: ScheduleContract.View) {
+ *         _view = view
+ *         getDataUseCase.getScheduleData()
+ *             .observeOn(mainThreadScheduler)
+ *             .subscribeBy(
+ *                 onSuccess = { data ->
+ *                     val eventsData = data.sortedBy { it.date }
+ *                     view.hideLoadingView()
+ *                     view.setItems(eventsData)
+ *                 },
+ *                 onError = { error ->
+ *                     view.hideLoadingView()
+ *                     view.showErrorMessage()
+ *                 }
+ *             ).addTo(disposable)
+ *     }
+ *
+ *     override fun clearData() {
+ *         disposable.clear()
+ *         _view = null
+ *     }
+ * }
+ * */
