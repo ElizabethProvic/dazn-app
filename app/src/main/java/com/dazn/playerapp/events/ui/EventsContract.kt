@@ -1,6 +1,7 @@
 package com.dazn.playerapp.events.ui
 
 import com.dazn.playerapp.model.Event
+import com.dazn.playerapp.schedule.ui.ScheduleContract
 
 interface EventsContract {
 
@@ -10,8 +11,8 @@ interface EventsContract {
         fun showErrorMessage()
     }
 
-    interface Presenter  {
-        fun getData()
+    interface Presenter {
+        fun getData(view: View)
         fun clearData()
     }
 }

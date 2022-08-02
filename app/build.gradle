@@ -45,7 +45,7 @@ android {
 
 def lifeCycleExtensionsVersion = '1.1.1'
 def retrofitVersion = '2.3.0'
-def daggerVersion = '2.13'
+def daggerVersion = '2.42'
 def glideVersion = '4.8.0'
 def mockitoVersion = '3.11.2'
 def rxJavaVersion = '2.0.1'

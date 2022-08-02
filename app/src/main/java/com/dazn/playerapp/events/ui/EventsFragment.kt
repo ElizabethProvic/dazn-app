@@ -6,7 +6,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.core.os.bundleOf
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.NavHostFragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.dazn.playerapp.R
@@ -14,10 +13,14 @@ import com.dazn.playerapp.databinding.FragmentEventsBinding
 import com.dazn.playerapp.model.Event
 import com.dazn.playerapp.player.ui.PlayerFragment
 import com.dazn.playerapp.player.ui.PlayerFragment.Companion.ARG_VIDEO_ID
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-class EventsFragment : Fragment(), EventListAdapter.OnItemClickListener, EventsContract.View {
+class EventsFragment : DaggerFragment(), EventListAdapter.OnItemClickListener, EventsContract.View {
 
-    private lateinit var presenter: EventsPresenter
+    @Inject
+    lateinit var presenter: EventsContract.Presenter
+
     private val eventsAdapter = EventListAdapter(arrayListOf(), null)
     private var _binding: FragmentEventsBinding? = null
 
@@ -28,11 +31,9 @@ class EventsFragment : Fragment(), EventListAdapter.OnItemClickListener, EventsC
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
-        presenter = EventsPresenter(this)
         _binding = FragmentEventsBinding.inflate(inflater, container, false)
 
-        presenter.getData()
+        presenter.getData(this)
         val root: View = binding.root
 
         binding.eventsList.apply {

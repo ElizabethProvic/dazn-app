@@ -6,52 +6,39 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.dazn.playerapp.databinding.FragmentScheduleBinding
 import com.dazn.playerapp.events.ui.EventListAdapter
 import com.dazn.playerapp.model.Event
+import dagger.android.support.DaggerFragment
+import javax.inject.Inject
 
-class ScheduleFragment : Fragment(), ScheduleContract.View {
+class ScheduleFragment : DaggerFragment(), ScheduleContract.View {
 
-    private lateinit var presenter: SchedulePresenter
-
-    private var _binding: FragmentScheduleBinding? = null
+    @Inject
+    lateinit var presenter: ScheduleContract.Presenter
 
     private var adapter: EventListAdapter? = null
+    private var _binding: FragmentScheduleBinding? = null
 
     private val binding get() = _binding!!
-
-    private val timerHandler = Handler()
-
-    private val updateDataRunnable: Runnable = object : Runnable {
-        override fun run() {
-            presenter.getData()
-            timerHandler.postDelayed(this, EVERY_30_SECONDS)
-        }
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        presenter = SchedulePresenter(this)
-
         _binding = FragmentScheduleBinding.inflate(inflater, container, false)
+
+        presenter.getData(this)
         val root: View = binding.root
-        presenter.getData()
 
         setupSchedule()
 
         return root
     }
 
-    override fun onResume() {
-        super.onResume()
-        timerHandler.postDelayed(updateDataRunnable, EVERY_30_SECONDS)
-    }
 
     private fun setupSchedule() {
         binding.scheduleList.layoutManager = LinearLayoutManager(requireContext(), RecyclerView.VERTICAL, false)
@@ -65,6 +52,7 @@ class ScheduleFragment : Fragment(), ScheduleContract.View {
     }
 
     override fun setItems(items: List<Event>) {
+        adapter?.updateEvents(ArrayList(items))
         binding.scheduleList.adapter = EventListAdapter(ArrayList(items), null)
     }
 

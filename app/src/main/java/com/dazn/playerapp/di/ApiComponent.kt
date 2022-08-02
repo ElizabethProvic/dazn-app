@@ -12,9 +12,5 @@ interface ApiComponent {
     fun inject(service: PlayerService)
 
     fun inject(useCase: GetDataUseCase)
-
-    fun inject(presenter: EventsPresenter)
-
-    fun inject(presenter: SchedulePresenter)
 }
 
