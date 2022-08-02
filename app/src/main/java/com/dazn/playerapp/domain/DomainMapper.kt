@@ -1,6 +1,7 @@
-package com.dazn.playerapp.events.domain
+package com.dazn.playerapp.domain
 
 import com.dazn.playerapp.model.Event
+import com.dazn.playerapp.model.ScheduleItem
 import javax.inject.Inject
 
 class DomainMapper @Inject constructor() {
@@ -18,15 +19,14 @@ class DomainMapper @Inject constructor() {
         }
     }
 
-    fun mapScheduleItemItemToDomain(item: Event): Event {
+    fun mapScheduleItemItemToDomain(item: ScheduleItem): ScheduleItem {
         return with(item) {
-            Event(
+            ScheduleItem(
                 title = title,
                 subtitle = subtitle,
                 date = date,
                 id = id,
-                imageUrl = imageUrl,
-                videoUrl = videoUrl
+                imageUrl = imageUrl
             )
         }
     }

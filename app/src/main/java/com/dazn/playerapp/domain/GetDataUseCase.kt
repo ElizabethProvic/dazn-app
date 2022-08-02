@@ -1,8 +1,8 @@
-package com.dazn.playerapp.events.domain
+package com.dazn.playerapp.domain
 
 import com.dazn.playerapp.api.PlayerService
-import com.dazn.playerapp.di.DaggerApiComponent
 import com.dazn.playerapp.model.Event
+import com.dazn.playerapp.model.ScheduleItem
 import io.reactivex.Single
 import io.reactivex.schedulers.Schedulers
 import javax.inject.Inject
@@ -21,7 +21,7 @@ class GetDataUseCase @Inject constructor(
             }
     }
 
-    fun getScheduleData(): Single<List<Event>> {
+    fun getScheduleData(): Single<List<ScheduleItem>> {
         return playerService.getSchedule()
             .subscribeOn(Schedulers.io())
             .observeOn(Schedulers.computation())

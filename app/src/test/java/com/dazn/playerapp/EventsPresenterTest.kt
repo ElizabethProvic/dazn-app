@@ -2,7 +2,7 @@ package com.dazn.playerapp
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.dazn.playerapp.api.PlayerService
-import com.dazn.playerapp.events.domain.GetDataUseCase
+import com.dazn.playerapp.domain.GetDataUseCase
 import com.dazn.playerapp.events.ui.EventsContract
 import com.dazn.playerapp.events.ui.EventsPresenter
 import com.dazn.playerapp.model.Event

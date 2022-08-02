@@ -2,8 +2,6 @@
 
 package com.dazn.playerapp.extenstions
 
-import android.os.Build
-import androidx.annotation.RequiresApi
 import java.text.SimpleDateFormat
 import java.time.LocalDate
 import java.util.*

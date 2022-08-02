@@ -2,6 +2,7 @@ package com.dazn.playerapp.api
 
 import com.dazn.playerapp.di.DaggerApiComponent
 import com.dazn.playerapp.model.Event
+import com.dazn.playerapp.model.ScheduleItem
 import io.reactivex.Single
 import javax.inject.Inject
 
@@ -18,7 +19,7 @@ class PlayerService {
         return api.getEvents()
     }
 
-    fun getSchedule(): Single<List<Event>> {
+    fun getSchedule(): Single<List<ScheduleItem>> {
         return api.getSchedule()
     }
 }

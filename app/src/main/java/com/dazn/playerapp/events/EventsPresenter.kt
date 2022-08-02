@@ -1,16 +1,14 @@
 package com.dazn.playerapp.events.ui
 
-import com.dazn.playerapp.api.PlayerService
-import com.dazn.playerapp.di.DaggerApiComponent
-import com.dazn.playerapp.events.domain.GetDataUseCase
-import com.dazn.playerapp.schedule.ui.ScheduleContract
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.dazn.playerapp.domain.GetDataUseCase
+import com.dazn.playerapp.util.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import io.reactivex.rxkotlin.subscribeBy
 import javax.inject.Inject
 
 class EventsPresenter @Inject constructor(
+    private val scheduler: SchedulerProvider,
     private val getDataUseCase: GetDataUseCase
 ) : EventsContract.Presenter {
 
@@ -21,7 +19,7 @@ class EventsPresenter @Inject constructor(
     override fun getData(view: EventsContract.View) {
         _view = view
         getDataUseCase.getEventsData()
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(scheduler.ui)
             .subscribeBy(
                 onSuccess = { data ->
                     val eventsData = data.sortedBy { it.date }

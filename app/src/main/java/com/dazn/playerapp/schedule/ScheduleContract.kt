@@ -1,11 +1,11 @@
 package com.dazn.playerapp.schedule.ui
 
-import com.dazn.playerapp.model.Event
+import com.dazn.playerapp.model.ScheduleItem
 
 interface ScheduleContract {
 
     interface View {
-        fun setItems(items: List<Event>)
+        fun setItems(items: List<ScheduleItem>)
         fun hideLoadingView()
         fun showErrorMessage()
     }

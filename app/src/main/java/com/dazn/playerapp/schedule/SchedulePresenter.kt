@@ -1,14 +1,14 @@
 package com.dazn.playerapp.schedule.ui
 
-import com.dazn.playerapp.events.domain.GetDataUseCase
-import io.reactivex.Scheduler
-import io.reactivex.android.schedulers.AndroidSchedulers
+import com.dazn.playerapp.domain.GetDataUseCase
+import com.dazn.playerapp.util.SchedulerProvider
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.rxkotlin.addTo
 import java.util.concurrent.TimeUnit
 import javax.inject.Inject
 
 class SchedulePresenter @Inject constructor(
+    private val scheduler: SchedulerProvider,
     private val getDataUseCase: GetDataUseCase
 ) : ScheduleContract.Presenter {
 
@@ -19,7 +19,7 @@ class SchedulePresenter @Inject constructor(
     override fun getData(view: ScheduleContract.View) {
         _view = view
         getDataUseCase.getScheduleData()
-            .observeOn(AndroidSchedulers.mainThread())
+            .observeOn(scheduler.ui)
             .repeatWhen { completed -> completed.delay(30, TimeUnit.SECONDS) }
             .subscribe(
                 { data ->

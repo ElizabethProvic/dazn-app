@@ -1,4 +1,5 @@
-package com.dazn.playerapp.events.ui
+package com.dazn.playerapp.schedule.ui
+
 import android.text.format.DateUtils
 import android.view.LayoutInflater
 import android.view.View
@@ -6,15 +7,15 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import com.dazn.playerapp.model.Event
 import com.dazn.playerapp.R
 import com.dazn.playerapp.extenstions.*
+import com.dazn.playerapp.model.ScheduleItem
 
-class EventListAdapter(var events: ArrayList<Event>, private var listener: OnItemClickListener?): RecyclerView.Adapter<EventListAdapter.EventsViewHolder>() {
+class ScheduleListAdapter(var scheduleList: ArrayList<ScheduleItem>): RecyclerView.Adapter<ScheduleListAdapter.EventsViewHolder>() {
 
-    fun updateEvents(newEvents: ArrayList<Event>) {
-        events.clear()
-        events.addAll(newEvents)
+    fun updateSchedule(newEvents: ArrayList<ScheduleItem>) {
+        scheduleList.clear()
+        scheduleList.addAll(newEvents)
         notifyDataSetChanged()
     }
 
@@ -22,14 +23,10 @@ class EventListAdapter(var events: ArrayList<Event>, private var listener: OnIte
         LayoutInflater.from(parent.context).inflate(R.layout.event_card, parent, false)
     )
 
-    override fun getItemCount() = events.size
+    override fun getItemCount() = scheduleList.size
 
     override fun onBindViewHolder(holder: EventsViewHolder, position: Int) {
-        holder.bind(events[position], listener)
-    }
-
-    interface OnItemClickListener {
-        fun onContentItemClick(id: String)
+        holder.bind(scheduleList[position])
     }
 
     class EventsViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -40,7 +37,7 @@ class EventListAdapter(var events: ArrayList<Event>, private var listener: OnIte
         private val progressDrawable = getProgressDrawable(view.context)
         private val imageView: ImageView = itemView.findViewById(R.id.thumbnail)
 
-        fun bind(event: Event, listener: OnItemClickListener?) {
+        fun bind(event: ScheduleItem) {
             title.text = event.title
             subtitle.text = event.subtitle
 
@@ -55,10 +52,6 @@ class EventListAdapter(var events: ArrayList<Event>, private var listener: OnIte
             date.text = kickOff
 
             imageView.loadImage(event.imageUrl, progressDrawable)
-
-            itemView.setOnClickListener {
-                event.videoUrl?.let { url -> listener?.onContentItemClick(url) }
-            }
         }
     }
 }

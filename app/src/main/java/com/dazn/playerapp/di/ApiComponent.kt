@@ -1,9 +1,7 @@
 package com.dazn.playerapp.di
 
 import com.dazn.playerapp.api.PlayerService
-import com.dazn.playerapp.events.domain.GetDataUseCase
-import com.dazn.playerapp.events.ui.EventsPresenter
-import com.dazn.playerapp.schedule.ui.SchedulePresenter
+import com.dazn.playerapp.domain.GetDataUseCase
 import dagger.Component
 
 @Component(modules = [ApiModule::class])

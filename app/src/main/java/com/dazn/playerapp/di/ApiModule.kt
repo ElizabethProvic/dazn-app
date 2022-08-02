@@ -2,8 +2,8 @@ package com.dazn.playerapp.di
 
 import com.dazn.playerapp.api.PlayerApi
 import com.dazn.playerapp.api.PlayerService
-import com.dazn.playerapp.events.domain.DomainMapper
-import com.dazn.playerapp.events.domain.GetDataUseCase
+import com.dazn.playerapp.domain.DomainMapper
+import com.dazn.playerapp.domain.GetDataUseCase
 import com.jakewharton.espresso.OkHttp3IdlingResource
 
 import dagger.Module

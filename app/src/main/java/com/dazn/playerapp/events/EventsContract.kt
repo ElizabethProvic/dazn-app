@@ -1,7 +1,6 @@
 package com.dazn.playerapp.events.ui
 
 import com.dazn.playerapp.model.Event
-import com.dazn.playerapp.schedule.ui.ScheduleContract
 
 interface EventsContract {
 

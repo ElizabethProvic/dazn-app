@@ -1,4 +1,5 @@
 package com.dazn.playerapp.di
+
 import dagger.Component
 import dagger.android.AndroidInjectionModule
 import dagger.android.AndroidInjector
@@ -12,7 +13,8 @@ import javax.inject.Singleton
         ActivityModule::class,
         FragmentsModule::class,
         EventsModule::class,
-        ScheduleModule::class
+        ScheduleModule::class,
+        SchedulersModel::class
     ]
 )
 interface PlayerAppComponent : AndroidInjector<PlayerApp> {
