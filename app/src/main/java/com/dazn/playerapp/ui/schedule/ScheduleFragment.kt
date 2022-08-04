@@ -1,4 +1,4 @@
-package com.dazn.playerapp.schedule.ui
+package com.dazn.playerapp.ui.schedule
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -50,8 +50,8 @@ class ScheduleFragment : DaggerFragment(), ScheduleContract.View {
     }
 
     override fun setItems(items: List<ScheduleItem>) {
-        adapter?.updateSchedule(ArrayList(items))
-        binding.scheduleList.adapter = ScheduleListAdapter(ArrayList(items))
+        binding.scheduleList.adapter = ScheduleListAdapter()
+        (binding.scheduleList.adapter as ScheduleListAdapter).submitList(items)
     }
 
     override fun hideLoadingView() {

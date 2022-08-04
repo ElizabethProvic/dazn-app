@@ -11,10 +11,9 @@ import javax.inject.Singleton
         AndroidInjectionModule::class,
         ApiModule::class,
         ActivityModule::class,
-        FragmentsModule::class,
         EventsModule::class,
         ScheduleModule::class,
-        SchedulersModel::class
+        SchedulersModule::class
     ]
 )
 interface PlayerAppComponent : AndroidInjector<PlayerApp> {

@@ -1,4 +1,4 @@
-package com.dazn.playerapp.player.ui
+package com.dazn.playerapp.ui.player
 
 import android.os.Bundle
 import android.view.LayoutInflater

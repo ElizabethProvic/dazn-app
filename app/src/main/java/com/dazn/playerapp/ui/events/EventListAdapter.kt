@@ -1,4 +1,4 @@
-package com.dazn.playerapp.schedule.ui
+package com.dazn.playerapp.ui.events
 
 import android.text.format.DateUtils
 import android.view.LayoutInflater
@@ -6,27 +6,33 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.recyclerview.widget.DiffUtil
+import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
+import com.dazn.playerapp.model.Event
 import com.dazn.playerapp.R
 import com.dazn.playerapp.extenstions.*
-import com.dazn.playerapp.model.ScheduleItem
 
-class ScheduleListAdapter(var scheduleList: ArrayList<ScheduleItem>): RecyclerView.Adapter<ScheduleListAdapter.EventsViewHolder>() {
+class EventListAdapter(private var listener: OnItemClickListener?): ListAdapter<Event, EventListAdapter.EventsViewHolder>(
+    object : DiffUtil.ItemCallback<Event>() {
+        override fun areItemsTheSame(oldItem: Event, newItem: Event) = true
+        override fun areContentsTheSame(oldItem: Event, newItem: Event) = oldItem == newItem
+    }
+) {
 
-    fun updateSchedule(newEvents: ArrayList<ScheduleItem>) {
-        scheduleList.clear()
-        scheduleList.addAll(newEvents)
-        notifyDataSetChanged()
+    override fun onCreateViewHolder(parent: ViewGroup, position: Int): EventsViewHolder {
+        return EventsViewHolder(
+            LayoutInflater.from(parent.context)
+                .inflate(R.layout.event_card, parent, false)
+        )
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int) = EventsViewHolder(
-        LayoutInflater.from(parent.context).inflate(R.layout.event_card, parent, false)
-    )
-
-    override fun getItemCount() = scheduleList.size
-
     override fun onBindViewHolder(holder: EventsViewHolder, position: Int) {
-        holder.bind(scheduleList[position])
+        holder.bind(getItem(position), listener)
+    }
+
+    interface OnItemClickListener {
+        fun onContentItemClick(id: String)
     }
 
     class EventsViewHolder(view: View): RecyclerView.ViewHolder(view) {
@@ -37,7 +43,7 @@ class ScheduleListAdapter(var scheduleList: ArrayList<ScheduleItem>): RecyclerVi
         private val progressDrawable = getProgressDrawable(view.context)
         private val imageView: ImageView = itemView.findViewById(R.id.thumbnail)
 
-        fun bind(event: ScheduleItem) {
+        fun bind(event: Event, listener: OnItemClickListener?) {
             title.text = event.title
             subtitle.text = event.subtitle
 
@@ -52,6 +58,10 @@ class ScheduleListAdapter(var scheduleList: ArrayList<ScheduleItem>): RecyclerVi
             date.text = kickOff
 
             imageView.loadImage(event.imageUrl, progressDrawable)
+
+            itemView.setOnClickListener {
+                event.videoUrl?.let { url -> listener?.onContentItemClick(url) }
+            }
         }
     }
 }

@@ -32,8 +32,8 @@ class ApiModule {
     }
 
     @Provides
-    fun providePlayerService(): PlayerService {
-        return PlayerService()
+    fun providePlayerService(playerApi: PlayerApi): PlayerService {
+        return PlayerService(playerApi)
     }
 
     @Provides

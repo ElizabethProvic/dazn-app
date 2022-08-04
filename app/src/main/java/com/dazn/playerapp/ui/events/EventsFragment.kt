@@ -1,4 +1,4 @@
-package com.dazn.playerapp.events.ui
+package com.dazn.playerapp.ui.events
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -11,8 +11,8 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.dazn.playerapp.R
 import com.dazn.playerapp.databinding.FragmentEventsBinding
 import com.dazn.playerapp.model.Event
-import com.dazn.playerapp.player.ui.PlayerFragment
-import com.dazn.playerapp.player.ui.PlayerFragment.Companion.ARG_VIDEO_ID
+import com.dazn.playerapp.ui.player.PlayerFragment
+import com.dazn.playerapp.ui.player.PlayerFragment.Companion.ARG_VIDEO_ID
 import dagger.android.support.DaggerFragment
 import javax.inject.Inject
 
@@ -21,7 +21,7 @@ class EventsFragment : DaggerFragment(), EventListAdapter.OnItemClickListener, E
     @Inject
     lateinit var presenter: EventsContract.Presenter
 
-    private val eventsAdapter = EventListAdapter(arrayListOf(), null)
+    private val eventsAdapter = EventListAdapter(null)
     private var _binding: FragmentEventsBinding? = null
 
     private val binding get() = _binding!!
@@ -62,8 +62,8 @@ class EventsFragment : DaggerFragment(), EventListAdapter.OnItemClickListener, E
     }
 
     override fun setItems(items: List<Event>) {
-        eventsAdapter.updateEvents(ArrayList(items))
-        binding.eventsList.adapter = EventListAdapter(ArrayList(items), this)
+        binding.eventsList.adapter = EventListAdapter(this)
+        (binding.eventsList.adapter as EventListAdapter).submitList(items)
     }
 
     override fun hideLoadingView() {

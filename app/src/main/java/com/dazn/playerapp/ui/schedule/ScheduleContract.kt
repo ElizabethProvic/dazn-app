@@ -1,4 +1,4 @@
-package com.dazn.playerapp.schedule.ui
+package com.dazn.playerapp.ui.schedule
 
 import com.dazn.playerapp.model.ScheduleItem
 

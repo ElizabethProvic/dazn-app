@@ -7,7 +7,7 @@ import dagger.Provides
 import javax.inject.Singleton
 
 @Module
-class SchedulersModel {
+class SchedulersModule {
 
     @Provides
     @Singleton

@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/navigation_events"
-        android:name="com.dazn.playerapp.events.ui.EventsFragment"
+        android:name="com.dazn.playerapp.ui.events.EventsFragment"
         android:label="@string/title_events"
         tools:layout="@layout/fragment_events">
 
@@ -19,13 +19,13 @@
 
     <fragment
         android:id="@+id/navigation_schedule"
-        android:name="com.dazn.playerapp.schedule.ui.ScheduleFragment"
+        android:name="com.dazn.playerapp.ui.schedule.ScheduleFragment"
         android:label="@string/title_schedule"
         tools:layout="@layout/fragment_schedule" />
 
     <fragment
         android:id="@+id/navigation_player"
-        android:name="com.dazn.playerapp.player.ui.PlayerFragment"
+        android:name="com.dazn.playerapp.ui.player.PlayerFragment"
         android:label="@string/title_player"
         tools:layout="@layout/player_fragment" />
 

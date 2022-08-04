@@ -1,4 +1,4 @@
-package com.dazn.playerapp.events.ui
+package com.dazn.playerapp.ui.events
 
 import com.dazn.playerapp.domain.GetDataUseCase
 import com.dazn.playerapp.util.SchedulerProvider

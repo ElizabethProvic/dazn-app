@@ -1,4 +1,4 @@
-package com.dazn.playerapp.schedule.ui
+package com.dazn.playerapp.ui.schedule
 
 import com.dazn.playerapp.domain.GetDataUseCase
 import com.dazn.playerapp.util.SchedulerProvider
