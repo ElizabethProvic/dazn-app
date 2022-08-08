@@ -8,7 +8,7 @@ class SchedulerProviderImpl : SchedulerProvider {
 
     override val io = Schedulers.io()
 
-    override val computation = Schedulers.computation()
-
     override val ui: Scheduler = AndroidSchedulers.mainThread()
+
+    override val timer = Schedulers.computation()
 }

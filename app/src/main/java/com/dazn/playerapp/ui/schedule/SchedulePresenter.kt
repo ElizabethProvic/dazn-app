@@ -20,7 +20,7 @@ class SchedulePresenter @Inject constructor(
         _view = view
         getDataUseCase.getScheduleData()
             .observeOn(scheduler.ui)
-            .repeatWhen { completed -> completed.delay(30, TimeUnit.SECONDS) }
+            .repeatWhen { completed -> completed.delay(30, TimeUnit.SECONDS, scheduler.timer) }
             .subscribe(
                 { data ->
                     val eventsData = data.sortedBy { it.date }

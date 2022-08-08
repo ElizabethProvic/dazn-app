@@ -1,6 +1,5 @@
 package com.dazn.playerapp
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.dazn.playerapp.api.PlayerService
 import com.dazn.playerapp.domain.GetDataUseCase
 import com.dazn.playerapp.ui.events.EventsContract
@@ -12,20 +11,12 @@ import com.nhaarman.mockitokotlin2.*
 import io.mockk.*
 import io.reactivex.Single
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
 
 class EventsPresenterTest {
-
-    @get:Rule
-    var rule = InstantTaskExecutorRule()
-
-    @Rule
-    @JvmField
-    val schedulers = RxImmediateSchedulerRule()
 
     private var mockSchedulers: SchedulerProvider = TestSchedulerProvider()
 
@@ -42,7 +33,7 @@ class EventsPresenterTest {
 
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this)
+        MockitoAnnotations.openMocks(this)
 
         mockView = mockk()
         spyPresenter = spyk(EventsPresenter(mockSchedulers, useCase))

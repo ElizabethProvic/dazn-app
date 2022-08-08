@@ -6,10 +6,10 @@ import com.dazn.playerapp.view.MainActivity
 import dagger.Module
 import dagger.android.ContributesAndroidInjector
 
-@Module(includes = [ActivityModule.FragmentsModule::class])
+@Module
 abstract class ActivityModule {
 
-    @ContributesAndroidInjector
+    @ContributesAndroidInjector(modules = [FragmentsModule::class])
     abstract fun contributesMainActivity(): MainActivity
 
     @Module

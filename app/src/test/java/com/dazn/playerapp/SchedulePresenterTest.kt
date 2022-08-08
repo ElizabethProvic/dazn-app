@@ -1,6 +1,5 @@
 package com.dazn.playerapp
 
-import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import com.dazn.playerapp.domain.GetDataUseCase
 import com.dazn.playerapp.model.ScheduleItem
 import com.dazn.playerapp.ui.schedule.ScheduleContract
@@ -10,21 +9,15 @@ import com.dazn.playerapp.util.TestSchedulerProvider
 import com.nhaarman.mockitokotlin2.*
 import io.mockk.*
 import io.reactivex.Single
+import io.reactivex.schedulers.TestScheduler
 import org.junit.Before
-import org.junit.Rule
 import org.junit.Test
 import org.mockito.Mock
 import org.mockito.Mockito.`when`
 import org.mockito.MockitoAnnotations
+import java.util.concurrent.TimeUnit
 
 class SchedulePresenterTest {
-
-    @get:Rule
-    var rule = InstantTaskExecutorRule()
-
-    @Rule
-    @JvmField
-    val schedulers = RxImmediateSchedulerRule()
 
     private var mockSchedulers: SchedulerProvider = TestSchedulerProvider()
 
@@ -38,7 +31,7 @@ class SchedulePresenterTest {
 
     @Before
     fun setup() {
-        MockitoAnnotations.initMocks(this)
+        MockitoAnnotations.openMocks(this)
 
         mockView = mockk()
         spyPresenter = spyk(SchedulePresenter(mockSchedulers, useCase))
@@ -48,14 +41,17 @@ class SchedulePresenterTest {
 
     @Test
     fun `get schedule data`() {
+        val testScheduler= mockSchedulers.timer as TestScheduler
+
         `when`(useCase.getScheduleData()).thenReturn(testSingle)
 
         every { mockView.hideLoadingView() } just Runs
         every { mockView.setItems(mockScheduleList) } just Runs
 
         spyPresenter.getData(mockView)
+        testScheduler.advanceTimeBy(60, TimeUnit.SECONDS)
 
-        verify(exactly = 1) {
+        verify(exactly = 3) {
             mockView.hideLoadingView()
             mockView.setItems(mockScheduleList)
         }
